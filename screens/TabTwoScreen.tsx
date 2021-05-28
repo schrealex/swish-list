@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Alert, Image, Linking, StyleSheet, TouchableHighlight } from 'react-native';
+import { ActivityIndicator, Alert, Image, Linking, StyleSheet, TouchableHighlight } from 'react-native';
 import { FlatList, Text, View } from '../components/Themed';
 import { SWITCH_WISH_LIST } from '../constants/WishList';
 
 export default function TabTwoScreen() {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [discountedListData, setDiscountedListData]: Array<any> = useState([]);
 
-    const _onItemClick = async (title_id: string) => {
+    const _onItemClick = async (id: string) => {
         try {
-            Linking.openURL(`https://ec.nintendo.com/NL/nl/titles/${title_id}`);
+            Linking.openURL(`https://ec.nintendo.com/NL/nl/titles/${id}`);
         } catch (error) {
             Alert.alert(error.message);
         }
@@ -42,9 +43,17 @@ export default function TabTwoScreen() {
         return item.regular_price.raw_value > 0 ? item.regular_price.amount : 'Free';
     };
 
+    const getOriginalPrice = (item: any) => {
+        return item.regular_price.amount;
+    };
+
+    const getDiscount = (item: any) => {
+        return Math.round(100 * (item.regular_price.raw_value - item.discount_price.raw_value) / item.regular_price.raw_value);
+    };
+
     useEffect(() => {
         async function getPricesList() {
-            const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.title_id), 50);
+            const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.id), 50);
             let pricesList: Array<any> = [];
             for (const chunk of switchWishListChunks) {
                 const priceResponse = await _getPrices(chunk);
@@ -52,6 +61,7 @@ export default function TabTwoScreen() {
             }
             const discountedPricesList = await SWITCH_WISH_LIST.map((item, i) => Object.assign({}, item, pricesList[i])).filter(game => game.discount_price);
             setDiscountedListData(discountedPricesList);
+            setIsLoading(false);
         }
 
         getPricesList();
@@ -60,28 +70,34 @@ export default function TabTwoScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.container}>
-                {discountedListData ? <FlatList
-                    data={discountedListData}
-                    keyExtractor={(item => item.title_id.toString())}
-                    ListEmptyComponent={() => (!discountedListData.length ?
-                        <Text style={styles.text}>The aren't any discounts at this time</Text>
-                        : null)
-                    }
-                    renderItem={({ item }) => (
-                        <TouchableHighlight key={item.title_id.toString()} onPress={() => _onItemClick(item.title_id)}>
-                            <View style={styles.item}>
-                                <Image
-                                    source={{
-                                        uri: item.image,
-                                    }}
-                                    style={{ width: 272, height: 153 }}
-                                />
-                                <Text style={styles.text}>{item.title}</Text>
-                                <Text style={[isDiscounted(item) ? styles.discountText : styles.text]}>Price: {getDisplayPrice(item)}</Text>
-                            </View>
-                        </TouchableHighlight>
-                    )}
-                /> : null}
+                {isLoading ?
+                    <ActivityIndicator size="large" color="#fff" /> :
+                    <FlatList
+                        data={discountedListData}
+                        keyExtractor={(item => item.id.toString())}
+                        ListEmptyComponent={() => (<Text style={styles.text}>There aren't any discounts at this time</Text>)}
+                        renderItem={({ item }) => (
+                            <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
+                                <View style={styles.item}>
+                                    <Image
+                                        source={{
+                                            uri: item.image,
+                                        }}
+                                        style={{ width: 272, height: 153 }}
+                                    />
+                                    <Text style={styles.text}>{item.title}</Text>
+                                    <Text style={[isDiscounted(item) ? styles.discountText : styles.text]}>
+                                        {getDisplayPrice(item)} {isDiscounted(item) ?
+                                        <React.Fragment>
+                                            <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                            <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+                                        </React.Fragment>
+                                        : null}
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
+                        )}
+                    />}
             </View>
         </View>
     );
@@ -104,7 +120,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: { paddingTop: 8 },
-    discountText: { color: 'red' },
+    discountText: {
+        color: 'red',
+        marginTop: 8,
+    },
+    originalPrice: {
+        fontSize: 12,
+        textDecorationLine: 'line-through',
+    },
+    discount: {
+        marginLeft: 8,
+        padding: 4,
+        backgroundColor: '#ccc',
+        color: '#000',
+    },
     separator: {
         marginVertical: 30,
         height: 1,

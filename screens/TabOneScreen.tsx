@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Alert, Image, Linking, StyleSheet, TouchableHighlight } from 'react-native';
+import { ActivityIndicator, Alert, Image, Linking, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { FlatList, Text, View } from '../components/Themed';
 import { SWITCH_WISH_LIST } from '../constants/WishList';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TabOneScreen() {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [listData, setListData]: Array<any> = useState([]);
+    const [compactView, setCompactView] = useState(false);
 
-    const _onItemClick = async (title_id: string) => {
+    const _onItemClick = async (id: string) => {
         try {
-            const url = `https://ec.nintendo.com/NL/nl/titles/${title_id}`;
+            const url = `https://ec.nintendo.com/NL/nl/titles/${id}`;
             // const isAvailable = await InAppBrowser.isAvailable();
             // if (isAvailable) {
             //     InAppBrowser.open(url, {
@@ -62,9 +65,21 @@ export default function TabOneScreen() {
         return item.regular_price.raw_value > 0 ? item.regular_price.amount : 'Free';
     };
 
+    const getOriginalPrice = (item: any) => {
+        return item.regular_price.amount;
+    };
+
+    const getDiscount = (item: any) => {
+        return Math.round(100 * (item.regular_price.raw_value - item.discount_price.raw_value) / item.regular_price.raw_value);
+    };
+
+    const toggleCompactView = (event: any) => {
+        setCompactView(!compactView);
+    };
+
     useEffect(() => {
         async function getPricesList() {
-            const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.title_id), 50);
+            const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.id), 50);
             let pricesList: Array<any> = [];
             for (const chunk of switchWishListChunks) {
                 const priceResponse = await _getPrices(chunk);
@@ -72,6 +87,7 @@ export default function TabOneScreen() {
             }
             const fullPricesList = await SWITCH_WISH_LIST.map((item, i) => Object.assign({}, item, pricesList[i]));
             setListData(fullPricesList);
+            setIsLoading(false);
         }
 
         getPricesList();
@@ -79,25 +95,42 @@ export default function TabOneScreen() {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={event => toggleCompactView(event)} style={styles.buttonContainer}>
+                <MaterialIcons name={compactView ? 'view-agenda' : 'view-headline'} size={64} color="gold" />
+            </TouchableOpacity>
             <View style={styles.container}>
-                {listData ? <FlatList
-                    data={listData}
-                    keyExtractor={(item => item.title_id.toString())}
-                    renderItem={({ item }) => (
-                        <TouchableHighlight key={item.title_id.toString()} onPress={() => _onItemClick(item.title_id)}>
-                            <View style={styles.item}>
-                                <Image
-                                    source={{
-                                        uri: item.image,
-                                    }}
-                                    style={{ width: 272, height: 153 }}
-                                />
-                                <Text style={styles.text}>{item.title}</Text>
-                                <Text style={[isDiscounted(item) ? styles.discountText : styles.text]}>Price: {getDisplayPrice(item)}</Text>
-                            </View>
-                        </TouchableHighlight>
-                    )}
-                /> : null}
+                {isLoading ?
+                    <ActivityIndicator size="large" color="#fff" /> :
+                    <FlatList
+                        data={listData}
+                        keyExtractor={(item => item.id.toString())}
+                        ListEmptyComponent={() => (<Text style={styles.text}>You have no games on your wishlist</Text>)}
+                        renderItem={({ item }) => (
+                            <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
+                                <View style={styles.item}>
+                                    {compactView ? null :
+                                        <Image
+                                            source={{
+                                                uri: item.image,
+                                            }}
+                                            style={{ width: 272, height: 153 }}
+                                        />}
+                                    <View style={compactView ? styles.compactView : styles.normalView}>
+                                        <Text style={styles.text}>{item.title}</Text>
+                                        {compactView ? <Text style={styles.separator}>|</Text> : null}
+                                        <Text style={[isDiscounted(item) ? styles.discountText : styles.text]}>
+                                            {getDisplayPrice(item)} {isDiscounted(item) ?
+                                            <React.Fragment>
+                                                <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                                <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+                                            </React.Fragment>
+                                            : null}
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableHighlight>
+                        )}
+                    />}
             </View>
         </View>
     );
@@ -109,6 +142,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    buttonContainer: {
+        position: 'absolute',
+        left: 5,
+        top: 5,
+        elevation: 8,
+        zIndex: 1,
+    },
+    buttonText: {
+        fontSize: 18,
+        color: "#fff",
+        backgroundColor: "#460096",
+        borderRadius: 5,
+        paddingVertical: 4,
+        paddingHorizontal: 12,
+        fontWeight: "bold",
+        textTransform: "uppercase"
+    },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -118,12 +168,34 @@ const styles = StyleSheet.create({
         fontSize: 16,
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
     },
     text: { paddingTop: 8 },
-    discountText: { color: 'red' },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
+    separator: { paddingTop: 8, paddingRight: 8, paddingLeft: 8 },
+    compactView: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    normalView: {
+        flexDirection: 'column',
+        flexWrap: 'nowrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    discountText: {
+        color: 'red',
+        paddingTop: 8
+    },
+    originalPrice: {
+        fontSize: 12,
+        textDecorationLine: 'line-through',
+    },
+    discount: {
+        marginLeft: 8,
+        padding: 4,
+        backgroundColor: '#ccc',
+        color: '#000',
     },
 });
