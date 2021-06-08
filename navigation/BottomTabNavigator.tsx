@@ -25,20 +25,21 @@ export default function BottomTabNavigator() {
             tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
             <BottomTab.Screen
                 name="TabOne"
-                component={TabOneNavigator}
-                options={{
-                    title: 'Full list',
-                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
-                }}
-            />
-            <BottomTab.Screen
-                name="TabTwo"
                 component={TabTwoNavigator}
                 options={{
                     title: 'Discounts list',
                     tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
                 }}
             />
+            <BottomTab.Screen
+                name="TabTwo"
+                component={TabOneNavigator}
+                options={{
+                    title: 'Full list',
+                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
+                }}
+            />
+
         </BottomTab.Navigator>
     );
 }

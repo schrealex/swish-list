@@ -32,15 +32,8 @@ export default function TabTwoScreen() {
         return response.prices;
     };
 
-    const isDiscounted = (item: any) => {
-        return item.discount_price;
-    };
-
-    const getDisplayPrice = (item: any) => {
-        if (isDiscounted(item)) {
-            return item.discount_price.amount;
-        }
-        return item.regular_price.raw_value > 0 ? item.regular_price.amount : 'Free';
+    const getDiscountPrice = (item: any) => {
+        return item.discount_price.amount;
     };
 
     const getOriginalPrice = (item: any) => {
@@ -86,14 +79,11 @@ export default function TabTwoScreen() {
                                         style={{ width: 272, height: 153 }}
                                     />
                                     <Text style={styles.text}>{item.title}</Text>
-                                    <Text style={[isDiscounted(item) ? styles.discountText : styles.text]}>
-                                        {getDisplayPrice(item)} {isDiscounted(item) ?
-                                        <React.Fragment>
-                                            <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
-                                            <Text style={styles.discount}>-{getDiscount(item)}%</Text>
-                                        </React.Fragment>
-                                        : null}
-                                    </Text>
+                                    <View style={styles.priceAndDiscount}>
+                                        <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                        <Text style={styles.discountPrice}>{getDiscountPrice(item)}</Text>
+                                        <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+                                    </View>
                                 </View>
                             </TouchableHighlight>
                         )}
@@ -119,20 +109,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    text: { paddingTop: 8 },
-    discountText: {
-        color: 'red',
-        marginTop: 8,
+    text: {
+        paddingTop: 8
+    },
+    priceAndDiscount: {
+        flexDirection: 'row',
     },
     originalPrice: {
+        marginTop: 12,
+        marginRight: 8,
         fontSize: 12,
+        color: '#ccc',
         textDecorationLine: 'line-through',
     },
+    discountPrice: {
+        marginTop: 8,
+        color: 'red',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
     discount: {
+        marginTop: 6,
         marginLeft: 8,
         padding: 4,
-        backgroundColor: '#ccc',
-        color: '#000',
+        paddingLeft: 6,
+        backgroundColor: '#df0b18',
+        color: '#fff',
+        fontWeight: 'bold',
     },
     separator: {
         marginVertical: 30,

@@ -73,7 +73,7 @@ export default function TabOneScreen() {
         return Math.round(100 * (item.regular_price.raw_value - item.discount_price.raw_value) / item.regular_price.raw_value);
     };
 
-    const toggleCompactView = (event: any) => {
+    const toggleCompactView = () => {
         setCompactView(!compactView);
     };
 
@@ -95,7 +95,7 @@ export default function TabOneScreen() {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={event => toggleCompactView(event)} style={styles.buttonContainer}>
+            <TouchableOpacity onPress={toggleCompactView} style={styles.buttonContainer}>
                 <MaterialIcons name={compactView ? 'view-agenda' : 'view-headline'} size={64} color="gold" />
             </TouchableOpacity>
             <View style={styles.container}>
@@ -116,16 +116,18 @@ export default function TabOneScreen() {
                                             style={{ width: 272, height: 153 }}
                                         />}
                                     <View style={compactView ? styles.compactView : styles.normalView}>
-                                        <Text style={styles.text}>{item.title}</Text>
+                                        <Text style={styles.title}>{item.title}</Text>
                                         {compactView ? <Text style={styles.separator}>|</Text> : null}
-                                        <Text style={[isDiscounted(item) ? styles.discountText : styles.text]}>
-                                            {getDisplayPrice(item)} {isDiscounted(item) ?
-                                            <React.Fragment>
-                                                <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
-                                                <Text style={styles.discount}>-{getDiscount(item)}%</Text>
-                                            </React.Fragment>
-                                            : null}
-                                        </Text>
+                                        <View style={styles.priceAndDiscount}>
+                                            {isDiscounted(item) ?
+                                                <React.Fragment>
+                                                    <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                                    <Text style={styles.discountPrice}>{getDisplayPrice(item)}</Text>
+                                                    <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+                                                </React.Fragment> :
+                                                <Text style={styles.displayPrice}>{getOriginalPrice(item)}</Text>
+                                            }
+                                        </View>
                                     </View>
                                 </View>
                             </TouchableHighlight>
@@ -151,26 +153,28 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 18,
-        color: "#fff",
-        backgroundColor: "#460096",
+        color: '#fff',
+        backgroundColor: '#460096',
         borderRadius: 5,
         paddingVertical: 4,
         paddingHorizontal: 12,
-        fontWeight: "bold",
-        textTransform: "uppercase"
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 18,
+        fontWeight: '500',
+        textAlign: 'center',
     },
     item: {
         padding: 10,
         fontSize: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
     },
-    text: { paddingTop: 8 },
+    text: {
+        paddingTop: 8
+    },
     separator: { paddingTop: 8, paddingRight: 8, paddingLeft: 8 },
     compactView: {
         flexDirection: 'row',
@@ -184,18 +188,30 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    discountText: {
+    priceAndDiscount: {
+        flexDirection: 'row',
+    },
+    discountPrice: {
+        marginTop: 8,
         color: 'red',
-        paddingTop: 8
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     originalPrice: {
+        marginTop: 12,
+        marginRight: 8,
         fontSize: 12,
+        color: '#ccc',
         textDecorationLine: 'line-through',
     },
+    displayPrice: {},
     discount: {
+        marginTop: 6,
         marginLeft: 8,
         padding: 4,
-        backgroundColor: '#ccc',
-        color: '#000',
+        paddingLeft: 6,
+        backgroundColor: '#df0b18',
+        color: '#fff',
+        fontWeight: 'bold',
     },
 });
