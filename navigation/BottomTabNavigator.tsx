@@ -39,7 +39,6 @@ export default function BottomTabNavigator() {
                     tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
                 }}
             />
-
         </BottomTab.Navigator>
     );
 }

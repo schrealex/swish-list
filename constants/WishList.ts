@@ -20,6 +20,11 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/290c0be54e09aeeab7597be975c9faf2267a33d66b6f75920e264ce253bda105.jpg'
     },
     {
+        id: 70010000026127,
+        title: 'Axiom Verge 2',
+        image: 'https://img-eshop.cdn.nintendo.net/i/6148c249bde53b28a868c273b2e649db31e33349fb82613a25df2bdcd7ac6731.jpg'
+    },
+    {
         id: 70010000034094,
         title: 'BALAN WONDERWORLD',
         image: 'https://img-eshop.cdn.nintendo.net/i/6fe05705e3ae6dd6d42bb4f5c78cd428142fa58d6c68241e0c730681a92f9c9f.jpg'
@@ -36,18 +41,13 @@ export const SWITCH_WISH_LIST = [
     },
     {
         id: 70050000013087,
-        title: "Bloodstained: Iga's Back Pack",
+        title: 'Bloodstained: Iga\'s Back Pack',
         image: 'https://img-eshop.cdn.nintendo.net/i/3bb185e610477a16eb72b42145f5c7c7e3a1b5aafd52fcaf31bab856a0893ec1.jpg'
     },
     {
         id: 70010000018693,
         title: 'BOXBOY! + BOXGIRL!',
         image: 'https://img-eshop.cdn.nintendo.net/i/131500eb8c66c45f3abd3ff18c9f877a60afcdad59beafb78ab7956072a773af.jpg'
-    },
-    {
-        id: 70010000020157,
-        title: 'Cadence of Hyrule – Crypt of the NecroDancer Featuring The Legend of Zelda',
-        image: 'https://img-eshop.cdn.nintendo.net/i/678ecb870bb44937d5cef21bb0815c8ccdbcc9fab77605bb43e41c017dbd1b05.jpg'
     },
     {
         id: 70010000034871,
@@ -61,7 +61,7 @@ export const SWITCH_WISH_LIST = [
     },
     {
         id: 70010000029034,
-        title: "Crash Bandicoot™ 4: It's About Time",
+        title: 'Crash Bandicoot™ 4: It\'s About Time',
         image: 'https://img-eshop.cdn.nintendo.net/i/52f1799d32072107f9f0ecad96fb833c4a0850b7e1cc6b1c7ca630b9f89dd2a0.jpg'
     },
     {
@@ -80,11 +80,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/0800b588495e5c926d1710c90db793b55dc57d68f2fc367975ecee4ff493c150.jpg'
     },
     {
-        id: 70010000007705,
-        title: 'Dead Cells',
-        image: 'https://img-eshop.cdn.nintendo.net/i/8159de779f7d1e70a663dc226bf022bd7c7667bd587e238fe29554fdb966deaf.jpg'
-    },
-    {
         id: 70010000022308,
         title: 'Disney Classic Games: Aladdin and The Lion King',
         image: 'https://img-eshop.cdn.nintendo.net/i/6fcf2f2a05078736a94c510e4928f31188199063d5014d9c5afca94a2115d5ea.jpg'
@@ -95,11 +90,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/c4511746619271b56f610ee1fdfb18a75a79d27cd28885737edb4fec970045cf.jpg'
     },
     {
-        id: 70010000020404,
-        title: 'DOOM 64',
-        image: 'https://img-eshop.cdn.nintendo.net/i/a2b5a83e47598a93c3e1e89e5f2d627409cc78a9973d98aace023c539c7edf11.jpg'
-    },
-    {
         id: 70070000011030,
         title: 'DOOM® Eternal',
         image: 'https://img-eshop.cdn.nintendo.net/i/09fde58766118f7aec9f6ff30f3a8d6e7ba37ace336e79097643431c911d99c1.jpg'
@@ -108,6 +98,11 @@ export const SWITCH_WISH_LIST = [
         id: 70010000022062,
         title: 'DOUBLE DRAGON',
         image: 'https://img-eshop.cdn.nintendo.net/i/dc246ef0780a66b779debba9056206a59d5a8e08dd7929d27de1b2025ab7bf06.jpg'
+    },
+    {
+        id: 70010000022214,
+        title: 'Double Dragon & Kunio-kun: Retro Brawler Bundle',
+        image: 'https://img-eshop.cdn.nintendo.net/i/780f8748d8d6aa5274b7223d07a89eb0a8046bc6088a5956346febc763032c81.jpg'
     },
     {
         id: 70010000001476,
@@ -142,7 +137,12 @@ export const SWITCH_WISH_LIST = [
     {
         id: 70010000041268,
         title: 'Gamestudio',
-        image: 'https://img-eshop.cdn.nintendo.net/i/58b38c34be19ba57c3c7f05835a070574f5922f0212b91df9062c2909a66e2d3.jpg'
+        image: 'https://img-eshop.cdn.nintendo.net/i/87894a2b14cd5b83256ff14e4d42184ff19816b8b3acaa5ac280c7c16f25eb8c.jpg'
+    },
+    {
+        id: 70010000022553,
+        title: 'Ghosts \'n Goblins Resurrection',
+        image: 'https://img-eshop.cdn.nintendo.net/i/67f74183e7884a1a85ec30315e8ba26bb443d61a3d59722d6ca5d9d8abe1693c.jpg'
     },
     {
         id: 70070000011313,
@@ -155,14 +155,9 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/9cf84b25fccd6da0f9dd2047590d014fc5cf533841d749e3fc73235adc6a0405.jpg'
     },
     {
-        id: 70010000033132,
-        title: 'Hades',
-        image: 'https://img-eshop.cdn.nintendo.net/i/dbc8c55a21688b446a5c57711b726956483a14ef8c5ddb861f897c0595ccb6b5.jpg'
-    },
-    {
         id: 70010000022219,
         title: 'HYPERCHARGE Unboxed',
-        image: 'https://img-eshop.cdn.nintendo.net/i/1d566d2688fc0941adf2245aed82964edced5af8b8440ca628dfd9bef2698f5e.jpg'
+        image: 'https://img-eshop.cdn.nintendo.net/i/799083c9961a72eed3a691943fce36c3370a4df0926cc73d849678d8bb09b617.jpg'
     },
     {
         id: 70010000022294,
@@ -205,6 +200,11 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/51e91f9e5d8729a5b34bef5e6c413024345308b3b1bc4243478a639a8314fb6f.jpg'
     },
     {
+        id: 70010000034061,
+        title: 'QUAKE',
+        image: 'https://img-eshop.cdn.nintendo.net/i/5054b3023e40291b8b5602aa52fa01578f404ba2c28d893ee45849a3b453a344.jpg'
+    },
+    {
         id: 70010000027398,
         title: 'Raji: An Ancient Epic',
         image: 'https://img-eshop.cdn.nintendo.net/i/a9cd6cf3b2e2e11e254ce7bd3340a32b94d7530764f23dfffde9c167bec8d9df.jpg'
@@ -221,7 +221,7 @@ export const SWITCH_WISH_LIST = [
     },
     {
         id: 70010000012856,
-        title: 'resident evil 4',
+        title: 'Resident evil 4',
         image: 'https://img-eshop.cdn.nintendo.net/i/bda9376fc9f77e48856ab04b56a0928cd0bdc3dd0c8f3972187c97bfc3552a4c.jpg'
     },
     {
@@ -260,9 +260,24 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/49a855384aa8569dc6b8fe961cb358a7dc161f55204b0b1cfad226a6a0871891.jpg'
     },
     {
+        id: 70010000036424,
+        title: 'Spelunky',
+        image: 'https://img-eshop.cdn.nintendo.net/i/97aef52535d94295cb82767ac60cbfe20d998665514f25bbeae5eca8c983fd2a.jpg'
+    },
+    {
+        id: 70010000036429,
+        title: 'Spelunky 2',
+        image: 'https://img-eshop.cdn.nintendo.net/i/5e2d777fa1459be3a152807b4c3e781bdee3813fba4d0facf9ec599197312084.jpg'
+    },
+    {
         id: 70010000001802,
         title: 'Stardew Valley',
         image: 'https://img-eshop.cdn.nintendo.net/i/5f5e252719310591cb662c42e1afa9755c4e67173d94e1a4177b9473f45e0b3a.jpg'
+    },
+    {
+        id: 70010000039711,
+        title: 'Super Cable Boy',
+        image: 'https://img-eshop.cdn.nintendo.net/i/5cefc2cad97107efe1a8b9b123fb0e65fa7e92227645a272f9d6de155f7d0637.jpg'
     },
     {
         id: 70010000018686,
@@ -273,11 +288,6 @@ export const SWITCH_WISH_LIST = [
         id: 70010000000495,
         title: 'The Binding of Isaac: Afterbirth+',
         image: 'https://img-eshop.cdn.nintendo.net/i/3af57990826e05cc20487959bacd492abb3a616e2efff2b0d5704e37fc2be95f.jpg'
-    },
-    {
-        id: 70010000003972,
-        title: 'The Infectious Madness of Doctor Dekker',
-        image: 'https://img-eshop.cdn.nintendo.net/i/3f7d7ad7d207383a6bfe14a67ee57897eece329946d9beb96fe90a1d07e10fc8.jpg'
     },
     {
         id: 70010000018011,

@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Image, Linking, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Alert, Image, Linking, StyleSheet, TouchableHighlight } from 'react-native';
 import { FlatList, Text, View } from '../components/Themed';
 import { SWITCH_WISH_LIST } from '../constants/WishList';
-import { MaterialIcons } from '@expo/vector-icons';
+import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
 
 export default function TabOneScreen() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [listData, setListData]: Array<any> = useState([]);
+    const [sortAscending, setSortAscending] = useState(true);
     const [compactView, setCompactView] = useState(false);
+    const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+
 
     const _onItemClick = async (id: string) => {
         try {
@@ -77,6 +80,42 @@ export default function TabOneScreen() {
         setCompactView(!compactView);
     };
 
+    const sortList = () => {
+        const sortedList = [...listData].sort((a: any, b: any) => {
+            return sortAscending ? b.title.toLowerCase().localeCompare(a.title.toLowerCase()) :
+                a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+        });
+        setSortAscending(!sortAscending);
+        setListData(sortedList);
+        closeMenu();
+    };
+
+    const sortByPrice = () => {
+        const sortedList = [...listData].sort((a: any, b: any) => sortAscending ?
+            parseFloat(a.regular_price.raw_value) - parseFloat(b.regular_price.raw_value) :
+            parseFloat(b.regular_price.raw_value) - parseFloat(a.regular_price.raw_value));
+        setSortAscending(!sortAscending);
+        setListData(sortedList);
+        closeMenu();
+    };
+
+    const sortByDiscountPercentage = () => {
+        const sortedList = [...listData].sort((a: any, b: any) => {
+            if (a.discount_price && b.discount_price) {
+                return getDiscount(a) - getDiscount(b);
+            }
+            return (a.discount_price && !b.discount_price) ? -1 : (!a.discount_price && b.discount_price) ? 1 : 0;
+        });
+        setListData(sortedList);
+        closeMenu();
+    };
+
+    const openMenu = () => {
+        setFilterMenuOpen(true);
+    };
+
+    const closeMenu = () => setFilterMenuOpen(false);
+
     useEffect(() => {
         async function getPricesList() {
             const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.id), 50);
@@ -94,47 +133,74 @@ export default function TabOneScreen() {
     }, []);
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={toggleCompactView} style={styles.buttonContainer}>
-                <MaterialIcons name={compactView ? 'view-agenda' : 'view-headline'} size={64} color="gold" />
-            </TouchableOpacity>
+        <Provider>
             <View style={styles.container}>
-                {isLoading ?
-                    <ActivityIndicator size="large" color="#fff" /> :
-                    <FlatList
-                        data={listData}
-                        keyExtractor={(item => item.id.toString())}
-                        ListEmptyComponent={() => (<Text style={styles.text}>You have no games on your wishlist</Text>)}
-                        renderItem={({ item }) => (
-                            <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
-                                <View style={styles.item}>
-                                    {compactView ? null :
-                                        <Image
-                                            source={{
-                                                uri: item.image,
-                                            }}
-                                            style={{ width: 272, height: 153 }}
-                                        />}
-                                    <View style={compactView ? styles.compactView : styles.normalView}>
-                                        <Text style={styles.title}>{item.title}</Text>
-                                        {compactView ? <Text style={styles.separator}>|</Text> : null}
-                                        <View style={styles.priceAndDiscount}>
-                                            {isDiscounted(item) ?
-                                                <React.Fragment>
-                                                    <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
-                                                    <Text style={styles.discountPrice}>{getDisplayPrice(item)}</Text>
-                                                    <Text style={styles.discount}>-{getDiscount(item)}%</Text>
-                                                </React.Fragment> :
-                                                <Text style={styles.displayPrice}>{getOriginalPrice(item)}</Text>
-                                            }
+
+                <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView} style={styles.viewButton} />
+
+                <View
+                    style={{
+                        width: '100%',
+                        paddingTop: 20,
+                        paddingRight: 20,
+                        flexDirection: 'row',
+                        alignItems: 'flex-end',
+                        alignContent: 'flex-end',
+                        justifyContent: 'flex-end',
+                    }}>
+                    <Menu
+                        visible={filterMenuOpen}
+                        onDismiss={closeMenu}
+                        anchor={
+                            <IconButton icon="sort-variant" color="gold" size={30} style={{ backgroundColor: 'rgba(243,197,0,0.34)', }}
+                                        onPress={openMenu}> </IconButton>
+                        }
+                    >
+                        <Menu.Item onPress={sortList} title="Sort alphabetical" />
+                        <Menu.Item onPress={sortByPrice} title="Sort by price" />
+                        <Menu.Item onPress={sortByDiscountPercentage} title="Sort by discount %" />
+                    </Menu>
+                </View>
+
+                <View style={styles.container}>
+                    {isLoading ?
+                        <ActivityIndicator size="large" color="#fff" /> :
+                        <FlatList
+                            data={listData}
+                            keyExtractor={(item => item.id.toString())}
+                            ListEmptyComponent={() => (<Text style={styles.text}>You have no games on your wishlist</Text>)}
+                            renderItem={({ item }) => (
+                                <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
+                                    <View style={styles.item}>
+                                        {compactView ? null :
+                                            <Image
+                                                source={{
+                                                    uri: item.image,
+                                                }}
+                                                style={{ width: 272, height: 153 }}
+                                            />
+                                        }
+                                        <View style={compactView ? styles.compactView : styles.normalView}>
+                                            <Text style={styles.title}>{item.title}</Text>
+                                            {compactView ? <Text style={styles.separator}>|</Text> : null}
+                                            <View style={styles.priceAndDiscount}>
+                                                {isDiscounted(item) ?
+                                                    <React.Fragment>
+                                                        <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                                        <Text style={styles.discountPrice}>{getDisplayPrice(item)}</Text>
+                                                        <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+                                                    </React.Fragment> :
+                                                    <Text style={styles.displayPrice}>{getOriginalPrice(item)}</Text>
+                                                }
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            </TouchableHighlight>
-                        )}
-                    />}
+                                </TouchableHighlight>
+                            )}
+                        />}
+                </View>
             </View>
-        </View>
+        </Provider>
     );
 };
 
@@ -144,12 +210,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    buttonContainer: {
+    viewButton: {
+        backgroundColor: 'rgba(243,197,0,0.34)',
         position: 'absolute',
         left: 5,
         top: 5,
-        elevation: 8,
-        zIndex: 1,
+        margin: 20,
+        zIndex: 10,
+    },
+    sortButton: {
+        backgroundColor: 'rgba(243,197,0,0.34)',
+        position: 'absolute',
+        zIndex: 10,
+        right: 5,
+        top: 5,
+        margin: 20,
     },
     buttonText: {
         fontSize: 18,
@@ -171,6 +246,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    centerText: {
+        textAlign: 'center',
     },
     text: {
         paddingTop: 8
@@ -204,7 +282,6 @@ const styles = StyleSheet.create({
         color: '#ccc',
         textDecorationLine: 'line-through',
     },
-    displayPrice: {},
     discount: {
         marginTop: 6,
         marginLeft: 8,
