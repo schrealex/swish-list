@@ -102,10 +102,11 @@ export default function TabOneScreen() {
     const sortByDiscountPercentage = () => {
         const sortedList = [...listData].sort((a: any, b: any) => {
             if (a.discount_price && b.discount_price) {
-                return getDiscount(a) - getDiscount(b);
+                return sortAscending ? getDiscount(b) - getDiscount(a) : getDiscount(a) - getDiscount(b);
             }
             return (a.discount_price && !b.discount_price) ? -1 : (!a.discount_price && b.discount_price) ? 1 : 0;
         });
+        setSortAscending(!sortAscending);
         setListData(sortedList);
         closeMenu();
     };
@@ -190,7 +191,7 @@ export default function TabOneScreen() {
                                                         <Text style={styles.discountPrice}>{getDisplayPrice(item)}</Text>
                                                         <Text style={styles.discount}>-{getDiscount(item)}%</Text>
                                                     </React.Fragment> :
-                                                    <Text style={styles.displayPrice}>{getOriginalPrice(item)}</Text>
+                                                    <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
                                                 }
                                             </View>
                                         </View>

@@ -13,7 +13,7 @@ import travolta from '../assets/images/travolta.gif';
 // @ts-ignore
 import travoltaStore from '../assets/images/travolta_store.gif';
 
-import { FAB, IconButton, Menu } from 'react-native-paper';
+import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
 
 export default function TabTwoScreen() {
 
@@ -86,10 +86,11 @@ export default function TabTwoScreen() {
     const sortByDiscountPercentage = () => {
         const sortedList = [...discountedListData].sort((a: any, b: any) => {
             if (a.discount_price && b.discount_price) {
-                return getDiscount(a) - getDiscount(b);
+                return sortAscending ? getDiscount(b) - getDiscount(a) : getDiscount(a) - getDiscount(b);
             }
             return (a.discount_price && !b.discount_price) ? -1 : (!a.discount_price && b.discount_price) ? 1 : 0;
         });
+        setSortAscending(!sortAscending);
         setDiscountedListData(sortedList);
         closeMenu();
     };
@@ -122,75 +123,77 @@ export default function TabTwoScreen() {
     }, []);
 
     return (
-        <View style={styles.container}>
-
-            <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView} style={styles.viewButton} />
-
-            <View
-                style={{
-                    width: '100%',
-                    paddingTop: 20,
-                    paddingRight: 20,
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    alignContent: 'flex-end',
-                    justifyContent: 'flex-end',
-                }}>
-                <Menu
-                    visible={filterMenuOpen}
-                    onDismiss={closeMenu}
-                    anchor={
-                        <IconButton icon="sort-variant" color="gold" size={30} style={{ backgroundColor: 'rgba(243,197,0,0.34)', }}
-                                    onPress={openMenu}> </IconButton>
-                    }
-                >
-                    <Menu.Item onPress={sortList} title="Sort alphabetical" />
-                    <Menu.Item onPress={sortByPrice} title="Sort by price" />
-                    <Menu.Item onPress={sortByDiscountPercentage} title="Sort by discount %" />
-                </Menu>
-            </View>
-
+        <Provider>
             <View style={styles.container}>
-                {isLoading ?
-                    <ActivityIndicator size="large" color="#fff" /> :
-                    <FlatList
-                        data={discountedListData}
-                        keyExtractor={(item => item.id.toString())}
-                        ListEmptyComponent={() => (
-                            <View>
-                                <Text style={styles.centerText}>There aren't any discounts at this time</Text>
-                                <Image
-                                    source={getNotFoundImage()}
-                                    style={{ width: 360 }}
-                                />
-                            </View>
-                        )}
-                        renderItem={({ item }) => (
-                            <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
-                                <View style={styles.item}>
-                                    {compactView ? null :
-                                        <Image
-                                            source={{
-                                                uri: item.image,
-                                            }}
-                                            style={{ width: 272, height: 153 }}
-                                        />
-                                    }
-                                    <View style={compactView ? styles.compactView : styles.normalView}>
-                                        <Text style={styles.text}>{item.title}</Text>
-                                        {compactView ? <Text style={styles.separator}>|</Text> : null}
-                                        <View style={styles.priceAndDiscount}>
-                                            <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
-                                            <Text style={styles.discountPrice}>{getDiscountPrice(item)}</Text>
-                                            <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+
+                <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView} style={styles.viewButton} />
+
+                <View
+                    style={{
+                        width: '100%',
+                        paddingTop: 20,
+                        paddingRight: 20,
+                        flexDirection: 'row',
+                        alignItems: 'flex-end',
+                        alignContent: 'flex-end',
+                        justifyContent: 'flex-end',
+                    }}>
+                    <Menu
+                        visible={filterMenuOpen}
+                        onDismiss={closeMenu}
+                        anchor={
+                            <IconButton icon="sort-variant" color="gold" size={30} style={{ backgroundColor: 'rgba(243,197,0,0.34)', }}
+                                        onPress={openMenu}> </IconButton>
+                        }
+                    >
+                        <Menu.Item onPress={sortList} title="Sort alphabetical" />
+                        <Menu.Item onPress={sortByPrice} title="Sort by price" />
+                        <Menu.Item onPress={sortByDiscountPercentage} title="Sort by discount %" />
+                    </Menu>
+                </View>
+
+                <View style={styles.container}>
+                    {isLoading ?
+                        <ActivityIndicator size="large" color="#fff" /> :
+                        <FlatList
+                            data={discountedListData}
+                            keyExtractor={(item => item.id.toString())}
+                            ListEmptyComponent={() => (
+                                <View>
+                                    <Text style={styles.centerText}>There aren't any discounts at this time</Text>
+                                    <Image
+                                        source={getNotFoundImage()}
+                                        style={{ width: 360 }}
+                                    />
+                                </View>
+                            )}
+                            renderItem={({ item }) => (
+                                <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
+                                    <View style={styles.item}>
+                                        {compactView ? null :
+                                            <Image
+                                                source={{
+                                                    uri: item.image,
+                                                }}
+                                                style={{ width: 272, height: 153 }}
+                                            />
+                                        }
+                                        <View style={compactView ? styles.compactView : styles.normalView}>
+                                            <Text style={styles.text}>{item.title}</Text>
+                                            {compactView ? <Text style={styles.separator}>|</Text> : null}
+                                            <View style={styles.priceAndDiscount}>
+                                                <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                                <Text style={styles.discountPrice}>{getDiscountPrice(item)}</Text>
+                                                <Text style={styles.discount}>-{getDiscount(item)}%</Text>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            </TouchableHighlight>
-                        )}
-                    />}
+                                </TouchableHighlight>
+                            )}
+                        />}
+                </View>
             </View>
-        </View>
+        </Provider>
     );
 };
 
