@@ -10,8 +10,8 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import WishListScreen from '../screens/WishListScreen';
+import DiscountsScreen from '../screens/DiscountsScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -58,7 +58,7 @@ function TabOneNavigator() {
         <TabOneStack.Navigator>
             <TabOneStack.Screen
                 name="TabOneScreen"
-                component={TabOneScreen}
+                component={WishListScreen}
                 options={{ headerTitle: 'Wish List' }}
             />
         </TabOneStack.Navigator>
@@ -72,7 +72,7 @@ function TabTwoNavigator() {
         <TabTwoStack.Navigator>
             <TabTwoStack.Screen
                 name="TabTwoScreen"
-                component={TabTwoScreen}
+                component={DiscountsScreen}
                 options={{ headerTitle: 'Discounts list' }}
             />
         </TabTwoStack.Navigator>

@@ -3,40 +3,32 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, Linking, StyleSheet, TouchableHighlight } from 'react-native';
 import { FlatList, Text, View } from '../components/Themed';
 import { SWITCH_WISH_LIST } from '../constants/WishList';
-import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
 
-export default function TabOneScreen(props: any) {
+// @ts-ignore
+import carrie from '../assets/images/carrie.gif';
+// @ts-ignore
+import georgeCostanza from '../assets/images/george_costanza.gif';
+// @ts-ignore
+import travolta from '../assets/images/travolta.gif';
+// @ts-ignore
+import travoltaStore from '../assets/images/travolta_store.gif';
+
+import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
+import dayjs from 'dayjs';
+
+export default function DiscountsScreen() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [listData, setListData]: Array<any> = useState([]);
+    const [discountedListData, setDiscountedListData]: Array<any> = useState([]);
     const [sortAscending, setSortAscending] = useState(true);
     const [compactView, setCompactView] = useState(false);
     const [filterMenuOpen, setFilterMenuOpen] = useState(false);
 
+    const notFoundImages = [carrie, georgeCostanza, travolta, travoltaStore];
 
     const _onItemClick = async (id: string) => {
         try {
-            const url = `https://ec.nintendo.com/NL/nl/titles/${id}`;
-            // const isAvailable = await InAppBrowser.isAvailable();
-            // if (isAvailable) {
-            //     InAppBrowser.open(url, {
-            //         // iOS Properties
-            //         dismissButtonStyle: 'cancel',
-            //         preferredBarTintColor: 'gray',
-            //         preferredControlTintColor: 'white',
-            //         // Android Properties
-            //         showTitle: true,
-            //         toolbarColor: '#6200EE',
-            //         secondaryToolbarColor: 'black',
-            //         enableUrlBarHiding: true,
-            //         enableDefaultShare: true,
-            //         forceCloseOnRedirection: true,
-            //     }).then((result: any) => {
-            //         Alert.alert(JSON.stringify(result));
-            //     });
-            // } else {
-            Linking.openURL(url);
-            // }
+            Linking.openURL(`https://ec.nintendo.com/NL/nl/titles/${id}`);
         } catch (error) {
             Alert.alert(error.message);
         }
@@ -57,15 +49,8 @@ export default function TabOneScreen(props: any) {
         return response.prices;
     };
 
-    const isDiscounted = (item: any) => {
-        return item.discount_price;
-    };
-
-    const getDisplayPrice = (item: any) => {
-        if (isDiscounted(item)) {
-            return item.discount_price.amount;
-        }
-        return item.regular_price.raw_value > 0 ? item.regular_price.amount : 'Free';
+    const getDiscountPrice = (item: any) => {
+        return item.discount_price.amount;
     };
 
     const getOriginalPrice = (item: any) => {
@@ -80,43 +65,34 @@ export default function TabOneScreen(props: any) {
         setCompactView(!compactView);
     };
 
-    const syncWishList = () => {
-        props.navigation.navigate(
-            'Browser',
-            { url: 'https://accounts.nintendo.com/connect/1.0.0/authorize?state=uz4ZfBIvppSh3Pgvb67Idiw9p9VLT8tO9cdss1Sb-1FdjWPs&redirect_uri=npf71b963c1b7b6d119://auth&client_id=71b963c1b7b6d119&scope=openid%20user%20user.birthday%20user.mii%20user.screenName&response_type=session_token_code&session_token_code_challenge=aNgS7j3xMuXaRrrWdQgnaqhbTWs3HqB2QS2PQtmRkqY&session_token_code_challenge_method=S256&theme=login_form' }
-        );
-
-        // Linking.openURL('https://accounts.nintendo.com/connect/1.0.0/authorize?state=uz4ZfBIvppSh3Pgvb67Idiw9p9VLT8tO9cdss1Sb-1FdjWPs&redirect_uri=npf71b963c1b7b6d119://auth&client_id=71b963c1b7b6d119&scope=openid%20user%20user.birthday%20user.mii%20user.screenName&response_type=session_token_code&session_token_code_challenge=aNgS7j3xMuXaRrrWdQgnaqhbTWs3HqB2QS2PQtmRkqY&session_token_code_challenge_method=S256&theme=login_form');
-    };
-
     const sortList = () => {
-        const sortedList = [...listData].sort((a: any, b: any) => {
+        const sortedList = [...discountedListData].sort((a: any, b: any) => {
             return sortAscending ? b.title.toLowerCase().localeCompare(a.title.toLowerCase()) :
                 a.title.toLowerCase().localeCompare(b.title.toLowerCase());
         });
         setSortAscending(!sortAscending);
-        setListData(sortedList);
+        setDiscountedListData(sortedList);
         closeMenu();
     };
 
-    const sortByPrice = () => {
-        const sortedList = [...listData].sort((a: any, b: any) => sortAscending ?
-            parseFloat(a.regular_price.raw_value) - parseFloat(b.regular_price.raw_value) :
-            parseFloat(b.regular_price.raw_value) - parseFloat(a.regular_price.raw_value));
+    const sortByDiscountPrice = () => {
+        const sortedList = [...discountedListData].sort((a: any, b: any) => sortAscending ?
+            parseFloat(a.discount_price.raw_value) - parseFloat(b.discount_price.raw_value) :
+            parseFloat(b.discount_price.raw_value) - parseFloat(a.discount_price.raw_value));
         setSortAscending(!sortAscending);
-        setListData(sortedList);
+        setDiscountedListData(sortedList);
         closeMenu();
     };
 
     const sortByDiscountPercentage = () => {
-        const sortedList = [...listData].sort((a: any, b: any) => {
+        const sortedList = [...discountedListData].sort((a: any, b: any) => {
             if (a.discount_price && b.discount_price) {
                 return sortAscending ? getDiscount(b) - getDiscount(a) : getDiscount(a) - getDiscount(b);
             }
             return (a.discount_price && !b.discount_price) ? -1 : (!a.discount_price && b.discount_price) ? 1 : 0;
         });
         setSortAscending(!sortAscending);
-        setListData(sortedList);
+        setDiscountedListData(sortedList);
         closeMenu();
     };
 
@@ -126,6 +102,11 @@ export default function TabOneScreen(props: any) {
 
     const closeMenu = () => setFilterMenuOpen(false);
 
+    const getNotFoundImage = () => {
+        const random = (Math.floor(Math.random() * 4));
+        return notFoundImages[random];
+    };
+
     useEffect(() => {
         async function getPricesList() {
             const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.id), 50);
@@ -134,8 +115,8 @@ export default function TabOneScreen(props: any) {
                 const priceResponse = await _getPrices(chunk);
                 pricesList = pricesList.concat(priceResponse);
             }
-            const fullPricesList = await SWITCH_WISH_LIST.map((item, i) => Object.assign({}, item, pricesList[i]));
-            setListData(fullPricesList);
+            const discountedPricesList = await SWITCH_WISH_LIST.map((item, i) => Object.assign({}, item, pricesList[i])).filter(game => game.discount_price);
+            setDiscountedListData(discountedPricesList);
             setIsLoading(false);
         }
 
@@ -147,7 +128,6 @@ export default function TabOneScreen(props: any) {
             <View style={styles.container}>
 
                 <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView} style={styles.viewButton} />
-                {/*<FAB icon="sync" color="gold" onPress={syncWishList} style={styles.syncButton} />*/}
 
                 <View
                     style={{
@@ -168,7 +148,7 @@ export default function TabOneScreen(props: any) {
                         }
                     >
                         <Menu.Item onPress={sortList} title="Sort alphabetical" />
-                        <Menu.Item onPress={sortByPrice} title="Sort by price" />
+                        <Menu.Item onPress={sortByDiscountPrice} title="Sort by discount price" />
                         <Menu.Item onPress={sortByDiscountPercentage} title="Sort by discount %" />
                     </Menu>
                 </View>
@@ -177,9 +157,17 @@ export default function TabOneScreen(props: any) {
                     {isLoading ?
                         <ActivityIndicator size="large" color="#fff" /> :
                         <FlatList
-                            data={listData}
+                            data={discountedListData}
                             keyExtractor={(item => item.id.toString())}
-                            ListEmptyComponent={() => (<Text style={styles.text}>You have no games on your wishlist</Text>)}
+                            ListEmptyComponent={() => (
+                                <View>
+                                    <Text style={styles.centerText}>There aren't any discounts at this time</Text>
+                                    <Image
+                                        source={getNotFoundImage()}
+                                        style={{ width: 360 }}
+                                    />
+                                </View>
+                            )}
                             renderItem={({ item }) => (
                                 <TouchableHighlight key={item.id.toString()} onPress={() => _onItemClick(item.id)}>
                                     <View style={styles.item}>
@@ -195,16 +183,13 @@ export default function TabOneScreen(props: any) {
                                             <Text style={styles.text}>{item.title}</Text>
                                             {compactView ? <Text style={styles.separator}>|</Text> : null}
                                             <View style={styles.priceAndDiscount}>
-                                                {isDiscounted(item) ?
-                                                    <React.Fragment>
-                                                        <Text style={[styles.originalPrice,
-                                                            styles.originalPriceWithDiscount]}>{getOriginalPrice(item)}</Text>
-                                                        <Text style={styles.discountPrice}>{getDisplayPrice(item)}</Text>
-                                                        <Text style={styles.discount}>-{getDiscount(item)}%</Text>
-                                                    </React.Fragment> :
-                                                    <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
-                                                }
+                                                <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                                <Text style={styles.discountPrice}>{getDiscountPrice(item)}</Text>
+                                                <Text style={styles.discount}>-{getDiscount(item)}%</Text>
                                             </View>
+                                            <Text style={styles.sale_end_text}>Sale until: <Text
+                                                style={styles.sale_end_date}>{dayjs(item.discount_price.end_datetime).format('DD-MM-YYYY')}</Text>
+                                            </Text>
                                         </View>
                                     </View>
                                 </TouchableHighlight>
@@ -227,14 +212,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 5,
         top: 5,
-        margin: 20,
-        zIndex: 10,
-    },
-    syncButton: {
-        backgroundColor: 'rgba(243,197,0,0.34)',
-        position: 'absolute',
-        left: 5,
-        top: 60,
         margin: 20,
         zIndex: 10,
     },
@@ -300,17 +277,23 @@ const styles = StyleSheet.create({
         marginRight: 8,
         fontSize: 12,
         color: '#ccc',
-    },
-    originalPriceWithDiscount: {
         textDecorationLine: 'line-through',
     },
     discount: {
         marginTop: 6,
         marginLeft: 8,
+        marginRight: 8,
         padding: 4,
         paddingLeft: 6,
         backgroundColor: '#df0b18',
         color: '#fff',
+        fontWeight: 'bold',
+    },
+    sale_end_text: {
+        fontSize: 12,
+        marginTop: 5,
+    },
+    sale_end_date: {
         fontWeight: 'bold',
     },
 });
