@@ -5,7 +5,7 @@ import { FlatList, Text, View } from '../components/Themed';
 import { SWITCH_WISH_LIST } from '../constants/WishList';
 import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
 
-export default function TabOneScreen() {
+export default function TabOneScreen(props: any) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [listData, setListData]: Array<any> = useState([]);
@@ -80,6 +80,15 @@ export default function TabOneScreen() {
         setCompactView(!compactView);
     };
 
+    const syncWishList = () => {
+        props.navigation.navigate(
+            'Browser',
+            { url: 'https://accounts.nintendo.com/connect/1.0.0/authorize?state=uz4ZfBIvppSh3Pgvb67Idiw9p9VLT8tO9cdss1Sb-1FdjWPs&redirect_uri=npf71b963c1b7b6d119://auth&client_id=71b963c1b7b6d119&scope=openid%20user%20user.birthday%20user.mii%20user.screenName&response_type=session_token_code&session_token_code_challenge=aNgS7j3xMuXaRrrWdQgnaqhbTWs3HqB2QS2PQtmRkqY&session_token_code_challenge_method=S256&theme=login_form' }
+        );
+
+        // Linking.openURL('https://accounts.nintendo.com/connect/1.0.0/authorize?state=uz4ZfBIvppSh3Pgvb67Idiw9p9VLT8tO9cdss1Sb-1FdjWPs&redirect_uri=npf71b963c1b7b6d119://auth&client_id=71b963c1b7b6d119&scope=openid%20user%20user.birthday%20user.mii%20user.screenName&response_type=session_token_code&session_token_code_challenge=aNgS7j3xMuXaRrrWdQgnaqhbTWs3HqB2QS2PQtmRkqY&session_token_code_challenge_method=S256&theme=login_form');
+    };
+
     const sortList = () => {
         const sortedList = [...listData].sort((a: any, b: any) => {
             return sortAscending ? b.title.toLowerCase().localeCompare(a.title.toLowerCase()) :
@@ -138,6 +147,7 @@ export default function TabOneScreen() {
             <View style={styles.container}>
 
                 <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView} style={styles.viewButton} />
+                {/*<FAB icon="sync" color="gold" onPress={syncWishList} style={styles.syncButton} />*/}
 
                 <View
                     style={{
@@ -182,12 +192,13 @@ export default function TabOneScreen() {
                                             />
                                         }
                                         <View style={compactView ? styles.compactView : styles.normalView}>
-                                            <Text style={styles.title}>{item.title}</Text>
+                                            <Text style={styles.text}>{item.title}</Text>
                                             {compactView ? <Text style={styles.separator}>|</Text> : null}
                                             <View style={styles.priceAndDiscount}>
                                                 {isDiscounted(item) ?
                                                     <React.Fragment>
-                                                        <Text style={styles.originalPrice}>{getOriginalPrice(item)}</Text>
+                                                        <Text style={[styles.originalPrice,
+                                                            styles.originalPriceWithDiscount]}>{getOriginalPrice(item)}</Text>
                                                         <Text style={styles.discountPrice}>{getDisplayPrice(item)}</Text>
                                                         <Text style={styles.discount}>-{getDiscount(item)}%</Text>
                                                     </React.Fragment> :
@@ -216,6 +227,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 5,
         top: 5,
+        margin: 20,
+        zIndex: 10,
+    },
+    syncButton: {
+        backgroundColor: 'rgba(243,197,0,0.34)',
+        position: 'absolute',
+        left: 5,
+        top: 60,
         margin: 20,
         zIndex: 10,
     },
@@ -281,6 +300,8 @@ const styles = StyleSheet.create({
         marginRight: 8,
         fontSize: 12,
         color: '#ccc',
+    },
+    originalPriceWithDiscount: {
         textDecorationLine: 'line-through',
     },
     discount: {

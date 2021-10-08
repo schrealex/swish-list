@@ -14,6 +14,7 @@ import travolta from '../assets/images/travolta.gif';
 import travoltaStore from '../assets/images/travolta_store.gif';
 
 import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
+import dayjs from 'dayjs';
 
 export default function TabTwoScreen() {
 
@@ -74,10 +75,10 @@ export default function TabTwoScreen() {
         closeMenu();
     };
 
-    const sortByPrice = () => {
+    const sortByDiscountPrice = () => {
         const sortedList = [...discountedListData].sort((a: any, b: any) => sortAscending ?
-            parseFloat(a.regular_price.raw_value) - parseFloat(b.regular_price.raw_value) :
-            parseFloat(b.regular_price.raw_value) - parseFloat(a.regular_price.raw_value));
+            parseFloat(a.discount_price.raw_value) - parseFloat(b.discount_price.raw_value) :
+            parseFloat(b.discount_price.raw_value) - parseFloat(a.discount_price.raw_value));
         setSortAscending(!sortAscending);
         setDiscountedListData(sortedList);
         closeMenu();
@@ -147,7 +148,7 @@ export default function TabTwoScreen() {
                         }
                     >
                         <Menu.Item onPress={sortList} title="Sort alphabetical" />
-                        <Menu.Item onPress={sortByPrice} title="Sort by price" />
+                        <Menu.Item onPress={sortByDiscountPrice} title="Sort by discount price" />
                         <Menu.Item onPress={sortByDiscountPercentage} title="Sort by discount %" />
                     </Menu>
                 </View>
@@ -186,6 +187,9 @@ export default function TabTwoScreen() {
                                                 <Text style={styles.discountPrice}>{getDiscountPrice(item)}</Text>
                                                 <Text style={styles.discount}>-{getDiscount(item)}%</Text>
                                             </View>
+                                            <Text style={styles.sale_end_text}>Sale until: <Text
+                                                style={styles.sale_end_date}>{dayjs(item.discount_price.end_datetime).format('DD-MM-YYYY')}</Text>
+                                            </Text>
                                         </View>
                                     </View>
                                 </TouchableHighlight>
@@ -278,10 +282,18 @@ const styles = StyleSheet.create({
     discount: {
         marginTop: 6,
         marginLeft: 8,
+        marginRight: 8,
         padding: 4,
         paddingLeft: 6,
         backgroundColor: '#df0b18',
         color: '#fff',
+        fontWeight: 'bold',
+    },
+    sale_end_text: {
+        fontSize: 12,
+        marginTop: 5,
+    },
+    sale_end_date: {
         fontWeight: 'bold',
     },
 });

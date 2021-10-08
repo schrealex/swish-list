@@ -1,5 +1,15 @@
 export const SWITCH_WISH_LIST = [
     {
+        id: 70010000010594,
+        title: 'Alwa\'s Awakening',
+        image: 'https://img-eshop.cdn.nintendo.net/i/a1a1ebb8349b3e56285c50fab9aaa25748118da58cd5eadca006b1218ba73650.jpg'
+    },
+    {
+        id: 70010000031489,
+        title: 'Alwa\'s Legacy',
+        image: 'https://img-eshop.cdn.nintendo.net/i/5833409e7d9b16f3530e5ef8dab0c2735830ee4068238ffe852a9078018ac8df.jpg'
+    },
+    {
         id: 70010000016671,
         title: 'Amnesia: Collection',
         image: 'https://img-eshop.cdn.nintendo.net/i/e416a6ab599adbb201c98d446390a06a46d587ecf2d0dc55e4e2025c18fe8b0c.jpg'
@@ -25,11 +35,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/6148c249bde53b28a868c273b2e649db31e33349fb82613a25df2bdcd7ac6731.jpg'
     },
     {
-        id: 70010000034094,
-        title: 'BALAN WONDERWORLD',
-        image: 'https://img-eshop.cdn.nintendo.net/i/6fe05705e3ae6dd6d42bb4f5c78cd428142fa58d6c68241e0c730681a92f9c9f.jpg'
-    },
-    {
         id: 70010000006762,
         title: 'Bayonetta™',
         image: 'https://img-eshop.cdn.nintendo.net/i/6d6ae871b11ac87da2e19063b7d224e0d489404c6d5e848154d0b941e3b4bb39.jpg'
@@ -40,14 +45,14 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/11c0cfa01694d37d55c9eae3705ba0697c2dc6b8f7f98c41ac57b39eb02a32cb.jpg'
     },
     {
-        id: 70050000013087,
-        title: 'Bloodstained: Iga\'s Back Pack',
-        image: 'https://img-eshop.cdn.nintendo.net/i/3bb185e610477a16eb72b42145f5c7c7e3a1b5aafd52fcaf31bab856a0893ec1.jpg'
-    },
-    {
         id: 70010000018693,
         title: 'BOXBOY! + BOXGIRL!',
         image: 'https://img-eshop.cdn.nintendo.net/i/131500eb8c66c45f3abd3ff18c9f877a60afcdad59beafb78ab7956072a773af.jpg'
+    },
+    {
+        id: 70010000044379,
+        title: 'Castlevania Advance Collection',
+        image: 'https://img-eshop.cdn.nintendo.net/i/03c4e9784040739ec19d279331dd2951da967f8f20478f665b9408418fa9d552.jpg'
     },
     {
         id: 70010000034871,
@@ -78,6 +83,21 @@ export const SWITCH_WISH_LIST = [
         id: 70010000019476,
         title: 'Cyber Shadow',
         image: 'https://img-eshop.cdn.nintendo.net/i/0800b588495e5c926d1710c90db793b55dc57d68f2fc367975ecee4ff493c150.jpg'
+    },
+    {
+        id: 70050000024449,
+        title: 'Dead Cells: Fatal Falls',
+        image: 'https://img-eshop.cdn.nintendo.net/i/596ec3e3fe0276643c5d3716b5040efbb8415d634fbe9bc35e8a3f756f7608f9.jpg'
+    },
+    {
+        id: 70050000017619,
+        title: 'Dead Cells: The Bad Seed',
+        image: 'https://img-eshop.cdn.nintendo.net/i/e068e36d0223f90a0c76f5216d7005579eac080d7eef31a3eaeaf530e77993d9.jpg'
+    },
+    {
+        id: 70010000038820,
+        title: 'Diablo® II: Resurrected™',
+        image: 'https://img-eshop.cdn.nintendo.net/i/353b407a48c000cc6fce107d5e0295917a97adc1c79f16dbb58a1740f2648a01.jpg'
     },
     {
         id: 70010000022308,
@@ -143,11 +163,6 @@ export const SWITCH_WISH_LIST = [
         id: 70010000022553,
         title: 'Ghosts \'n Goblins Resurrection',
         image: 'https://img-eshop.cdn.nintendo.net/i/67f74183e7884a1a85ec30315e8ba26bb443d61a3d59722d6ca5d9d8abe1693c.jpg'
-    },
-    {
-        id: 70070000011313,
-        title: 'Ghostrunner',
-        image: 'https://img-eshop.cdn.nintendo.net/i/48d1b1836b704c865d8c9309d033a5ce87dfcff6772bbdf0cad106b0c56d6e1c.jpg'
     },
     {
         id: 70010000000775,
@@ -288,6 +303,11 @@ export const SWITCH_WISH_LIST = [
         id: 70010000000495,
         title: 'The Binding of Isaac: Afterbirth+',
         image: 'https://img-eshop.cdn.nintendo.net/i/3af57990826e05cc20487959bacd492abb3a616e2efff2b0d5704e37fc2be95f.jpg'
+    },
+    {
+        id: 70010000035894,
+        title: 'The Hong Kong Massacre',
+        image: 'https://img-eshop.cdn.nintendo.net/i/3c2138e8559e85b6fd1d330bba26966492add6e310afbf47508e4d08a3014fe9.jpg'
     },
     {
         id: 70010000018011,
