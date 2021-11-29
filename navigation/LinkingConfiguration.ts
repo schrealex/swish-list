@@ -14,12 +14,12 @@ export default {
                 screens: {
                     TabOne: {
                         screens: {
-                            TabOneScreen: 'fullList',
+                            WishListScreen: 'fullList',
                         },
                     },
                     TabTwo: {
                         screens: {
-                            TabTwoScreen: 'two',
+                            DiscountsScreen: 'two',
                         },
                     },
                 },

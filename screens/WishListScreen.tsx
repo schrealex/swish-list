@@ -127,6 +127,8 @@ export default function WishListScreen(props: any) {
     const closeMenu = () => setFilterMenuOpen(false);
 
     useEffect(() => {
+        let mounted = true;
+
         async function getPricesList() {
             const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.id), 50);
             let pricesList: Array<any> = [];
@@ -139,7 +141,13 @@ export default function WishListScreen(props: any) {
             setIsLoading(false);
         }
 
-        getPricesList();
+        if (mounted) {
+            getPricesList();
+        }
+
+        return function cleanUp() {
+            mounted = false;
+        };
     }, []);
 
     return (

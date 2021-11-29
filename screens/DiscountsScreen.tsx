@@ -61,6 +61,13 @@ export default function DiscountsScreen() {
         return Math.round(100 * (item.regular_price.raw_value - item.discount_price.raw_value) / item.regular_price.raw_value);
     };
 
+    const getDaysOfSaleRemaining = (date: any) => {
+        const saleUntil = dayjs(date);
+        const today = dayjs();
+        const daysRemaining = Math.ceil(saleUntil.diff(today, 'day', true));
+        return daysRemaining > 1 ? `${daysRemaining} days remaining` : 'Last day of sale!';
+    };
+
     const toggleCompactView = () => {
         setCompactView(!compactView);
     };
@@ -108,6 +115,8 @@ export default function DiscountsScreen() {
     };
 
     useEffect(() => {
+        let mounted = true;
+
         async function getPricesList() {
             const switchWishListChunks = _getArrayChunks(SWITCH_WISH_LIST.map(item => item.id), 50);
             let pricesList: Array<any> = [];
@@ -120,14 +129,21 @@ export default function DiscountsScreen() {
             setIsLoading(false);
         }
 
-        getPricesList();
+        if (mounted) {
+            getPricesList();
+        }
+
+        return function cleanUp() {
+            mounted = false;
+        };
     }, []);
 
     return (
         <Provider>
             <View style={styles.container}>
 
-                <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView} style={styles.viewButton} />
+                <FAB icon={compactView ? 'view-agenda' : 'view-headline'} color="gold" onPress={toggleCompactView}
+                     style={styles.viewButton} />
 
                 <View
                     style={{
@@ -143,7 +159,7 @@ export default function DiscountsScreen() {
                         visible={filterMenuOpen}
                         onDismiss={closeMenu}
                         anchor={
-                            <IconButton icon="sort-variant" color="gold" size={30} style={{ backgroundColor: 'rgba(243,197,0,0.34)', }}
+                            <IconButton icon="sort-variant" color="gold" size={37.5} style={{ backgroundColor: 'rgba(243,197,0,0.34)', }}
                                         onPress={openMenu}> </IconButton>
                         }
                     >
@@ -190,6 +206,8 @@ export default function DiscountsScreen() {
                                             <Text style={styles.sale_end_text}>Sale until: <Text
                                                 style={styles.sale_end_date}>{dayjs(item.discount_price.end_datetime).format('DD-MM-YYYY')}</Text>
                                             </Text>
+                                            {compactView ? <Text style={styles.sale_end_divider}>|</Text> : null}
+                                            <Text style={styles.sale_end_text}>{getDaysOfSaleRemaining(item.discount_price.end_datetime)}</Text>
                                         </View>
                                     </View>
                                 </TouchableHighlight>
@@ -288,6 +306,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#df0b18',
         color: '#fff',
         fontWeight: 'bold',
+    },
+    sale_end_divider: {
+        marginLeft: 5,
+        marginRight: 5,
     },
     sale_end_text: {
         fontSize: 12,

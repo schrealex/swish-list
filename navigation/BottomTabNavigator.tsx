@@ -35,7 +35,7 @@ export default function BottomTabNavigator() {
                 name="TabTwo"
                 component={TabOneNavigator}
                 options={{
-                    title: 'Full list',
+                    title: 'Wish list',
                     tabBarIcon: ({ color }) => <TabBarIcon name="ios-list" color={color} />,
                 }}
             />
@@ -57,7 +57,7 @@ function TabOneNavigator() {
     return (
         <TabOneStack.Navigator>
             <TabOneStack.Screen
-                name="TabOneScreen"
+                name="WishListScreen"
                 component={WishListScreen}
                 options={{ headerTitle: 'Wish List' }}
             />
@@ -71,7 +71,7 @@ function TabTwoNavigator() {
     return (
         <TabTwoStack.Navigator>
             <TabTwoStack.Screen
-                name="TabTwoScreen"
+                name="DiscountsScreen"
                 component={DiscountsScreen}
                 options={{ headerTitle: 'Discounts list' }}
             />

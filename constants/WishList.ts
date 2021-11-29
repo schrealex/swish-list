@@ -155,6 +155,11 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/e3c1ec9b8b79093978b09915e7a09374a94f45da0588e6f99bdb10e5f224c09f.jpg'
     },
     {
+        id: 70010000035338,
+        title: 'DRAGON BALL Z : KAKAROT + A NEW POWER AWAKENS SET',
+        image: 'https://img-eshop.cdn.nintendo.net/i/92fe258e8980d184605d17ba745c553e04172847fc51e808916ea590e286e0d9.jpg'
+    },
+    {
         id: 70010000041268,
         title: 'Gamestudio',
         image: 'https://img-eshop.cdn.nintendo.net/i/87894a2b14cd5b83256ff14e4d42184ff19816b8b3acaa5ac280c7c16f25eb8c.jpg'
@@ -185,19 +190,14 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/c07ff6cb757c7737ac72a42b04bf319446e1613a4885399fa8f50622457cdbdd.jpg'
     },
     {
+        id: 70010000027077,
+        title: 'Minoria',
+        image: 'https://img-eshop.cdn.nintendo.net/i/11777334c3b3ae9c3322dc3ea5a02be13e0bd5370565777484c5be1165cb8a9b.jpg'
+    },
+    {
         id: 70010000014328,
         title: 'Observer',
         image: 'https://img-eshop.cdn.nintendo.net/i/b438645f7a2ad32969fe02fa7b78c3d0f7558369cfe375c49305657586ed82d6.jpg'
-    },
-    {
-        id: 70010000018709,
-        title: 'Ori and the Blind Forest: Definitive Edition',
-        image: 'https://img-eshop.cdn.nintendo.net/i/57964c9743340ef7900f07788e4daedccbd63f4053762caf4d9033d4299c95d7.jpg'
-    },
-    {
-        id: 70010000034726,
-        title: 'Ori and the Will of the Wisps',
-        image: 'https://img-eshop.cdn.nintendo.net/i/cf74916275780188fd850512efe6c678318d7317bf987599205d2a3fc76dbd79.jpg'
     },
     {
         id: 70010000003851,
@@ -210,44 +210,9 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/057249cf707a2a733c876c0eb453bb018ee6ea09f3aea5c350f4d76f70840d00.jpg'
     },
     {
-        id: 70010000028490,
-        title: 'Panzer Paladin',
-        image: 'https://img-eshop.cdn.nintendo.net/i/51e91f9e5d8729a5b34bef5e6c413024345308b3b1bc4243478a639a8314fb6f.jpg'
-    },
-    {
         id: 70010000034061,
         title: 'QUAKE',
         image: 'https://img-eshop.cdn.nintendo.net/i/5054b3023e40291b8b5602aa52fa01578f404ba2c28d893ee45849a3b453a344.jpg'
-    },
-    {
-        id: 70010000027398,
-        title: 'Raji: An Ancient Epic',
-        image: 'https://img-eshop.cdn.nintendo.net/i/a9cd6cf3b2e2e11e254ce7bd3340a32b94d7530764f23dfffde9c167bec8d9df.jpg'
-    },
-    {
-        id: 70010000012852,
-        title: 'Resident Evil',
-        image: 'https://img-eshop.cdn.nintendo.net/i/19e035f8d6818eb95875c1637b9786544039c10cf0fae5c232bdc8ec5918362f.jpg'
-    },
-    {
-        id: 70010000012848,
-        title: 'Resident Evil 0',
-        image: 'https://img-eshop.cdn.nintendo.net/i/ddddee5377e9ce4097ed845d7c1715c16c7fd1ecea1c8dc09c3325a1d5d647cb.jpg'
-    },
-    {
-        id: 70010000012856,
-        title: 'Resident evil 4',
-        image: 'https://img-eshop.cdn.nintendo.net/i/bda9376fc9f77e48856ab04b56a0928cd0bdc3dd0c8f3972187c97bfc3552a4c.jpg'
-    },
-    {
-        id: 70010000015874,
-        title: 'Resident Evil 5',
-        image: 'https://img-eshop.cdn.nintendo.net/i/884a68f6e51c32661516608362fe474812df1b6116b3ce6331e98fc65570e234.jpg'
-    },
-    {
-        id: 70010000015878,
-        title: 'Resident Evil 6',
-        image: 'https://img-eshop.cdn.nintendo.net/i/a8729ea09d5c9bc3d525a5e098d532671cc586fabb15668241351a5e9712ca96.jpg'
     },
     {
         id: 70010000000771,
@@ -265,9 +230,9 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/4a882bbe1d649a1221afd48a8375bab3b5c096f2d222b66f09336efcf83dd137.jpg'
     },
     {
-        id: 70010000009141,
-        title: 'Sayonara Wild Hearts',
-        image: 'https://img-eshop.cdn.nintendo.net/i/151315c081cb22aa7f8645187c488f29115758109c130de86a1aab0bd20572a1.jpg'
+        id: 70010000027678,
+        title: 'Smelter',
+        image: 'https://img-eshop.cdn.nintendo.net/i/72585a1a04787e7c0073c962be8144a870a5970e3529b90246aa828c2250fd93.jpg'
     },
     {
         id: 70010000019382,
@@ -313,11 +278,6 @@ export const SWITCH_WISH_LIST = [
         id: 70010000018011,
         title: 'The Touryst',
         image: 'https://img-eshop.cdn.nintendo.net/i/bd2994ab191576128b1c05478eccd909bb19ce3a0ce2a374dd7a5f52c6a543f6.jpg'
-    },
-    {
-        id: 70010000000493,
-        title: 'Thimbleweed Park',
-        image: 'https://img-eshop.cdn.nintendo.net/i/63e91409b6d8ef00bef7d55223332c736091ff9bdf98be05249f82ee61c4fa81.jpg'
     },
     {
         id: 70010000009919,
