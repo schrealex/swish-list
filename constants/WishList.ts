@@ -1,5 +1,10 @@
 export const SWITCH_WISH_LIST = [
     {
+        id: 70010000045208,
+        title: 'A Boy and His Blob',
+        image: 'https://img-eshop.cdn.nintendo.net/i/9e53bd116a50becf5fa560dd9b9d5a823d4875aa581616add24219badd2de38d.jpg'
+    },
+    {
         id: 70010000010594,
         title: 'Alwa\'s Awakening',
         image: 'https://img-eshop.cdn.nintendo.net/i/a1a1ebb8349b3e56285c50fab9aaa25748118da58cd5eadca006b1218ba73650.jpg'
