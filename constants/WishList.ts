@@ -80,11 +80,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/9200eee52da64ea656e2a21e5a3203940f77baf25b4d43a2737ef1f816d66a84.jpg'
     },
     {
-        id: 70010000016329,
-        title: 'Cuphead',
-        image: 'https://img-eshop.cdn.nintendo.net/i/26bfcff205f6f1e699557b6662f092440e3a70d247e9387629c7ee60b8981ae4.jpg'
-    },
-    {
         id: 70010000019476,
         title: 'Cyber Shadow',
         image: 'https://img-eshop.cdn.nintendo.net/i/0800b588495e5c926d1710c90db793b55dc57d68f2fc367975ecee4ff493c150.jpg'
