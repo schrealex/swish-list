@@ -115,31 +115,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/09fde58766118f7aec9f6ff30f3a8d6e7ba37ace336e79097643431c911d99c1.jpg'
     },
     {
-        id: 70010000022062,
-        title: 'DOUBLE DRAGON',
-        image: 'https://img-eshop.cdn.nintendo.net/i/dc246ef0780a66b779debba9056206a59d5a8e08dd7929d27de1b2025ab7bf06.jpg'
-    },
-    {
-        id: 70010000022214,
-        title: 'Double Dragon & Kunio-kun: Retro Brawler Bundle',
-        image: 'https://img-eshop.cdn.nintendo.net/i/780f8748d8d6aa5274b7223d07a89eb0a8046bc6088a5956346febc763032c81.jpg'
-    },
-    {
-        id: 70010000001476,
-        title: 'Double Dragon 4',
-        image: 'https://img-eshop.cdn.nintendo.net/i/d4b384fe830f3dca604f1d4cbc667ea8c134889f854560207867aa61c4f7a8b9.jpg'
-    },
-    {
-        id: 70010000022063,
-        title: 'DOUBLE DRAGON Ⅱ: The Revenge',
-        image: 'https://img-eshop.cdn.nintendo.net/i/326f3a023f5bda2f49d45ddd60969c0c0d8dad9cee6dd2fb3a7570559fed1a2b.jpg'
-    },
-    {
-        id: 70010000022064,
-        title: 'DOUBLE DRAGON Ⅲ: The Sacred Stones',
-        image: 'https://img-eshop.cdn.nintendo.net/i/4fb2050f8f12fe98c1220b9a5f4eb90374cfc63a2de4e6c167fcf29efe254542.jpg'
-    },
-    {
         id: 70070000003081,
         title: 'DRAGON BALL FIGHTERZ - FighterZ Pass',
         image: 'https://img-eshop.cdn.nintendo.net/i/c50e3ff942a2c58fa7fd97a285351303925e07ec96a948940b63b24a5d850ae9.jpg'
@@ -185,19 +160,9 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/91009ca25a0428271d6765ea02d796b533e0d9735430b40710c9219574131418.jpg'
     },
     {
-        id: 70010000019255,
-        title: 'KUNAI',
-        image: 'https://img-eshop.cdn.nintendo.net/i/c07ff6cb757c7737ac72a42b04bf319446e1613a4885399fa8f50622457cdbdd.jpg'
-    },
-    {
         id: 70010000027077,
         title: 'Minoria',
         image: 'https://img-eshop.cdn.nintendo.net/i/11777334c3b3ae9c3322dc3ea5a02be13e0bd5370565777484c5be1165cb8a9b.jpg'
-    },
-    {
-        id: 70010000014328,
-        title: 'Observer',
-        image: 'https://img-eshop.cdn.nintendo.net/i/b438645f7a2ad32969fe02fa7b78c3d0f7558369cfe375c49305657586ed82d6.jpg'
     },
     {
         id: 70010000003851,
@@ -260,11 +225,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/5cefc2cad97107efe1a8b9b123fb0e65fa7e92227645a272f9d6de155f7d0637.jpg'
     },
     {
-        id: 70010000018686,
-        title: 'Super Cane Magic ZERO',
-        image: 'https://img-eshop.cdn.nintendo.net/i/e9f5914ab7d9d9a0c53e43ef1f2676262ae314d259a04cd147609abb235d886f.jpg'
-    },
-    {
         id: 70010000000495,
         title: 'The Binding of Isaac: Afterbirth+',
         image: 'https://img-eshop.cdn.nintendo.net/i/3af57990826e05cc20487959bacd492abb3a616e2efff2b0d5704e37fc2be95f.jpg'
@@ -273,11 +233,6 @@ export const SWITCH_WISH_LIST = [
         id: 70010000035894,
         title: 'The Hong Kong Massacre',
         image: 'https://img-eshop.cdn.nintendo.net/i/3c2138e8559e85b6fd1d330bba26966492add6e310afbf47508e4d08a3014fe9.jpg'
-    },
-    {
-        id: 70010000018011,
-        title: 'The Touryst',
-        image: 'https://img-eshop.cdn.nintendo.net/i/bd2994ab191576128b1c05478eccd909bb19ce3a0ce2a374dd7a5f52c6a543f6.jpg'
     },
     {
         id: 70010000009919,
@@ -289,9 +244,4 @@ export const SWITCH_WISH_LIST = [
         title: 'Vigor',
         image: 'https://img-eshop.cdn.nintendo.net/i/70631f9590dfa0648a5d6be22f2cd8fb02abe6b9f730067c405d62b15429dd0b.jpg'
     },
-    {
-        id: 70010000003266,
-        title: 'Yooka-Laylee',
-        image: 'https://img-eshop.cdn.nintendo.net/i/8abe35ea2c4899aa123fe8aecab2e25ca8b60798fe342b7770e9f1f4ee426190.jpg'
-    }
 ];
