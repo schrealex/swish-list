@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, Linking, StyleSheet, TouchableHighlight } from 'react-native';
 import { FlatList, Text, View } from './Themed';
-import { FAB, IconButton, Menu, Provider } from 'react-native-paper';
+import { Avatar, FAB, IconButton, Menu, Provider } from 'react-native-paper';
 import { SWITCH_WISH_LIST } from '../constants/WishList';
 
 import dayjs from 'dayjs';
 
-// import { HowLongToBeatService } from 'howlongtobeat';
 // @ts-ignore
 import carrie from '../assets/images/carrie.gif';
 // @ts-ignore
@@ -16,18 +15,18 @@ import travolta from '../assets/images/travolta.gif';
 // @ts-ignore
 import travoltaStore from '../assets/images/travolta_store.gif';
 import { ListTypes } from '../enums/ListTypes';
+import { ListViewItem } from '../types/ListViewItem';
+import { HLTBInfo } from '../types/HLTBInfo';
 
 export default function ListView({ listType, emptyText }: { listType: ListTypes, emptyText: string }) {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [listData, setListData]: Array<any> = useState([]);
+    const [listData, setListData] = useState<ListViewItem[]>([]);
     const [sortAscending, setSortAscending] = useState(true);
     const [compactView, setCompactView] = useState(false);
     const [filterMenuOpen, setFilterMenuOpen] = useState(false);
 
     const notFoundImages = [carrie, georgeCostanza, travolta, travoltaStore];
-
-    // let hltbService = new HowLongToBeatService();
 
     const _onItemClick = async (id: string) => {
         try {
@@ -63,10 +62,6 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
         return item.regular_price.raw_value > 0 ? item.regular_price.amount : 'Free';
     };
 
-    const getDiscountPrice = (item: any) => {
-        return item.discount_price.amount;
-    };
-
     const getOriginalPrice = (item: any) => {
         return item.regular_price.amount;
     };
@@ -84,6 +79,18 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
     const getDaysOfSaleRemainingText = (date: any) => {
         const daysRemaining = getDaysOfSaleRemaining(date);
         return daysRemaining > 1 ? `${daysRemaining} days remaining` : 'Last day of sale!';
+    };
+
+    const getHLTBInformation = async (title: string): Promise<HLTBInfo> => {
+        const url = `https://game-information.vercel.app/get-game-info`;
+        const gameInfo = await fetch(`${url}?title=${title}`);
+
+        if (gameInfo.status === 403) throw new Error('Game info rate limit');
+        if (!gameInfo.ok) throw new Error('GET Game info request failed');
+
+        const response = await gameInfo.json();
+
+        return response.find((item: any) => item.searchTerm === title);
     };
 
     const toggleCompactView = () => {
@@ -155,8 +162,12 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
                 const priceResponse = await _getPrices(chunk);
                 pricesList = pricesList.concat(priceResponse);
             }
-            let dataList = await SWITCH_WISH_LIST.map((item, i) => Object.assign({}, item, pricesList[i]));
+            let dataList: Array<ListViewItem> = await SWITCH_WISH_LIST.map((item, i) => Object.assign({}, item, pricesList[i]));
             dataList = listType === ListTypes.Discounts ? dataList.filter(game => game.discount_price) : dataList;
+
+            // Add HLTB information to the dataList
+            await Promise.all(dataList.map(async (item: ListViewItem) => item.hltbInfo = await getHLTBInformation(item.title)));
+
             setListData(dataList);
             setIsLoading(false);
         }
@@ -231,6 +242,26 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
                                         }
                                         <View style={compactView ? styles.compactView : styles.normalView}>
                                             <Text style={styles.text}>{item.title}</Text>
+                                            {item.hltbInfo ? (
+                                                <View style={styles.timeToBeatContainer}>
+                                                    <Avatar.Icon icon="clock" color="gold" size={32}
+                                                                 style={{ backgroundColor: 'rgba(243,197,0,0.34)', }} />
+                                                    <View style={styles.timeToBeatWrapper}>
+                                                        <View style={styles.timeToBeat}>
+                                                            <Avatar.Icon icon="flag-checkered" color="gold" size={24}
+                                                                         style={{ backgroundColor: 'rgba(243,197,0,0.34)', }} />
+                                                            <Text style={styles.timeToBeatText}>{item.hltbInfo.gameplayMain} hours</Text>
+                                                        </View>
+                                                        {item.hltbInfo.gameplayCompletionist > 0 ?
+                                                            <View style={styles.timeToBeat}>
+                                                                <Avatar.Icon icon="trophy" color="gold" size={24}
+                                                                             style={{ backgroundColor: 'rgba(243,197,0,0.34)', }} />
+                                                                <Text style={styles.timeToBeatText}>{item.hltbInfo.gameplayCompletionist} hours</Text>
+                                                            </View>
+                                                            : null}
+                                                    </View>
+                                                </View>
+                                            ) : null}
                                             {compactView ? <Text style={styles.separator}>|</Text> : null}
                                             <View style={styles.priceAndDiscount}>
                                                 {isDiscounted(item) ?
@@ -339,6 +370,26 @@ const styles = StyleSheet.create({
         flexWrap: 'nowrap',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    timeToBeatContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        fontSize: 12,
+        paddingTop: 4,
+        marginLeft: 4,
+    },
+    timeToBeatWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    timeToBeat: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 4,
+        marginRight: 2,
+    },
+    timeToBeatText: {
+        marginLeft: 4,
     },
     priceAndDiscount: {
         flexDirection: 'row',
