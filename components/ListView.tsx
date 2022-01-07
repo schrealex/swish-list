@@ -82,15 +82,27 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
     };
 
     const getHLTBInformation = async (title: string): Promise<HLTBInfo> => {
+        const filteredTitle = filterCharacters(title);
+
         const url = `https://game-information.vercel.app/get-game-info`;
-        const gameInfo = await fetch(`${url}?title=${title}`);
+        const gameInfo = await fetch(`${url}?title=${filteredTitle}`);
 
         if (gameInfo.status === 403) throw new Error('Game info rate limit');
         if (!gameInfo.ok) throw new Error('GET Game info request failed');
 
         const response = await gameInfo.json();
+        return response.find((item: any) => item.searchTerm === filteredTitle);
+    };
 
-        return response.find((item: any) => item.searchTerm === title);
+    const filterCharacters = (title: string): string => {
+        const copyrightSign = String.fromCharCode(169);
+        const registeredSign = String.fromCharCode(174);
+        const trademarkSymbol = String.fromCharCode(8482);
+        let filteredTitle = title.replace(copyrightSign, '');
+        filteredTitle = filteredTitle.replace(registeredSign, '');
+        filteredTitle = filteredTitle.replace(trademarkSymbol, '');
+        filteredTitle = filteredTitle.replace('Remastered', '').trim();
+        return filteredTitle;
     };
 
     const toggleCompactView = () => {
@@ -242,7 +254,7 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
                                         }
                                         <View style={compactView ? styles.compactView : styles.normalView}>
                                             <Text style={styles.text}>{item.title}</Text>
-                                            {item.hltbInfo ? (
+                                            {item.hltbInfo && item.hltbInfo.gameplayMain > 0 ? (
                                                 <View style={styles.timeToBeatContainer}>
                                                     <Avatar.Icon icon="clock" color="gold" size={32}
                                                                  style={{ backgroundColor: 'rgba(243,197,0,0.34)', }} />
