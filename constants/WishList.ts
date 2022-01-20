@@ -220,11 +220,6 @@ export const SWITCH_WISH_LIST = [
         image: 'https://img-eshop.cdn.nintendo.net/i/5f5e252719310591cb662c42e1afa9755c4e67173d94e1a4177b9473f45e0b3a.jpg'
     },
     {
-        id: 70010000039711,
-        title: 'Super Cable Boy',
-        image: 'https://img-eshop.cdn.nintendo.net/i/5cefc2cad97107efe1a8b9b123fb0e65fa7e92227645a272f9d6de155f7d0637.jpg'
-    },
-    {
         id: 70010000000495,
         title: 'The Binding of Isaac: Afterbirth+',
         image: 'https://img-eshop.cdn.nintendo.net/i/3af57990826e05cc20487959bacd492abb3a616e2efff2b0d5704e37fc2be95f.jpg'
