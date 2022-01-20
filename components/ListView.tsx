@@ -14,6 +14,7 @@ import georgeCostanza from '../assets/images/george_costanza.gif';
 import travolta from '../assets/images/travolta.gif';
 // @ts-ignore
 import travoltaStore from '../assets/images/travolta_store.gif';
+
 import { ListTypes } from '../enums/ListTypes';
 import { ListViewItem } from '../types/ListViewItem';
 import { HLTBInfo } from '../types/HLTBInfo';
@@ -234,7 +235,7 @@ export default function ListView({ listType, emptyText }: { listType: ListTypes,
                             keyExtractor={(item => item.id.toString())}
                             ListEmptyComponent={() => (
                                 <View>
-                                    <Text style={styles.centerText}>{{ emptyText }}</Text>
+                                    <Text style={styles.centerText}>{emptyText}</Text>
                                     <Image
                                         source={getNotFoundImage()}
                                         style={{ width: 360 }}
